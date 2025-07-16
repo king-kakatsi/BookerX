@@ -1,0 +1,62 @@
+# ---- Global ----
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+
+# ---- Node (Frontend) ----
+bookerx-frontend/node_modules/
+bookerx-frontend/.env
+bookerx-frontend/dist/
+bookerx-frontend/.vite/
+bookerx-frontend/.eslintcache
+bookerx-frontend/.parcel-cache/
+bookerx-frontend/coverage/
+
+# ---- ASP.NET Core (Backend) ----
+BookerXBackend/bin/
+BookerXBackend/obj/
+BookerXBackend/.vs/
+BookerXBackend/.vscode/
+BookerXBackend/appsettings.Development.json
+BookerXBackend/appsettings.Local.json
+BookerXBackend/appsettings.*.json.user
+BookerXBackend/Properties/launchSettings.json
+BookerXBackend/*.db
+BookerXBackend/*.sqlite
+BookerXBackend/*.sqlite3
+BookerXBackend/*.mdf
+BookerXBackend/*.ldf
+BookerXBackend/*.log
+BookerXBackend/.user
+BookerXBackend/.suo
+BookerXBackend/.idea/
+
+# ---- Solution/IDE ----
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln.ide
+*.sln.iml
+*.sln.cache
+*.sln.docstates
+*.sln.ide
+*.sln.iml
+*.sln.cache
+*.sln.docstates
+*.sln.ide
+*.sln.iml
+*.sln.cache
+
+# ---- OS ----
+*.bak
+*.tmp
+~$*
+
+# ---- Misc ----
+.env
+.env.* 
