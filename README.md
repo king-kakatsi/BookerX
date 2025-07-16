@@ -1,3 +1,6 @@
+> **ℹ️ Note:**
+> Throughout this project, you'll notice a special formatting style and spacing for classes, methods, and code structure. This is intentional! The goal is to make the code as clear and readable as possible for everyone—including recruiters, collaborators, and learners. Enjoy the clean code experience! 🚀
+
 # BookerX
 
 **BookerX** is a modern, full-stack application to manage your book collection. It demonstrates a clean, professional architecture using ASP.NET Core Web API (with Entity Framework Core & SQLite) for the backend, and React (with Vite) for the frontend. The project is designed to be easy to run, understand, and extend—perfect for learning or showcasing your skills to recruiters.
