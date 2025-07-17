@@ -14,16 +14,23 @@ namespace BookerXBackend.Models.Entities
         public int Id { get; set; }
 
         /// <summary>
-        /// Unique username for login.
+        /// Unique email for login.
         /// </summary>
         [Required]
-        public string Username { get; set; } = string.Empty;
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Hashed password (never store plain text passwords).
         /// </summary>
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Full name of the user.
+        /// </summary>
+        [Required]
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// User role (User or Admin).

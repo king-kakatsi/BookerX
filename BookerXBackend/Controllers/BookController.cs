@@ -77,13 +77,21 @@ namespace BookerXBackend.Controllers
         /// <summary>
         /// Add a new book to the store.
         /// </summary>
-        /// <param name="book">Book object to add</param>
+        /// <param name="bookDto">BookDto object to add</param>
         /// <returns>The created book with its new ID.</returns>
         [HttpPost]
-        public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
+        public async Task<ActionResult<Book>> CreateBook([FromBody] BookDto bookDto)
         {
-            // Defensive: ignore client-supplied ID
-            book.Id = 0;
+            var book = new Book
+            {
+                Name = bookDto.Name,
+                Category = bookDto.Category,
+                Price = bookDto.Price,
+                Description = bookDto.Description,
+                AuthorId = bookDto.AuthorId,
+                ImageUrl = bookDto.ImageUrl,
+                BookUrl = bookDto.BookUrl
+            };
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
@@ -98,16 +106,11 @@ namespace BookerXBackend.Controllers
         /// Update an existing book by its ID.
         /// </summary>
         /// <param name="id">Book ID</param>
-        /// <param name="book">Updated book object</param>
+        /// <param name="bookDto">Updated BookDto object</param>
         /// <returns>Success message if updated, NotFound or Forbid if not allowed.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookDto bookDto)
         {
-            if (id != book.Id)
-            {
-                return BadRequest("Book ID mismatch.");
-            }
-
             var existingBook = await _context.Books.FindAsync(id);
             if (existingBook == null)
             {
@@ -124,10 +127,12 @@ namespace BookerXBackend.Controllers
             }
 
             // Update properties
-            existingBook.Name = book.Name;
-            existingBook.Category = book.Category;
-            existingBook.Price = book.Price;
-            existingBook.Description = book.Description;
+            existingBook.Name = bookDto.Name;
+            existingBook.Category = bookDto.Category;
+            existingBook.Price = bookDto.Price;
+            existingBook.Description = bookDto.Description;
+            existingBook.ImageUrl = bookDto.ImageUrl;
+            existingBook.BookUrl = bookDto.BookUrl;
 
             await _context.SaveChangesAsync();
             return Ok(new { message = "Book updated successfully." });

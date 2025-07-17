@@ -41,5 +41,22 @@ namespace BookerXBackend.Models.Entities
         /// </summary>
         [Required]
         public int AuthorId { get; set; }
+
+        /// <summary>
+        /// URL of the book's cover image (optional).
+        /// </summary>
+        public string? ImageUrl { get; set; }
+
+        /// <summary>
+        /// URL of the book's PDF or resource (optional).
+        /// </summary>
+        public string? BookUrl { get; set; }
+
+        /// <summary>
+        /// Search helper property. Concatenates all book fields into a single string for easy search/filtering.
+        /// Includes: Name, Category, Price, Description, AuthorId, and Id.
+        /// </summary>
+        public string SearchHelper => $"{Name} {Category} {Price} {Description} {AuthorId} {Id}";
+        
     }
 } 

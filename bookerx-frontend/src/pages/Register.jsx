@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import { registerUser } from '../controllers/user_controller';
 import { 
     BACKGROUND_COLOR, 
     TEXT_PRIMARY, 
@@ -12,12 +12,16 @@ import {
     BORDER_RADIUS_SMALL 
 } from '../theme/colors';
 
-// %%%%%% REGISTER PAGE COMPONENT %%%%%%%%%%%%
+
+
+
 /**
  * Register page component. Handles user registration with Bootstrap styling and validation.
+ * Fields: Name, Email, Password, Confirm Password
  * Example usage: <Register />
  */
 function Register() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,10 +29,12 @@ function Register() {
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
+
+
     // %%%%%% HANDLE REGISTER SUBMIT %%%%%%%%%%%%
     /**
-     * Handles the registration form submission.
-     * Validates fields, sends POST request to backend, handles errors and success.
+     * Handles the registration form submission using the user controller.
+     * Validates fields, calls registerUser, handles errors and success.
      * Parameters: event (form event)
      * Returns: nothing
      * Example usage: onSubmit={handleRegister}
@@ -37,7 +43,7 @@ function Register() {
         event.preventDefault();
         setError('');
         setSuccess('');
-        if (!email || !password || !confirmPassword) {
+        if (!name || !email || !password || !confirmPassword) {
             setError('Please fill in all fields.');
             return;
         }
@@ -46,26 +52,36 @@ function Register() {
             return;
         }
         try {
-            await api.post('/api/Auth/register', { email, password });
+            await registerUser(name, email, password);
             setSuccess('Registration successful! Redirecting to login...');
             setTimeout(() => navigate('/login'), 1500);
         } catch (err) {
-            if (err.response && err.response.data && err.response.data.message) {
-                setError(err.response.data.message);
-            } else {
-                setError('Registration failed. Please try again.');
-            }
+            setError(err.message || 'Registration failed. Please try again.');
         }
     }
     // %%%%%% END - HANDLE REGISTER SUBMIT %%%%%%%%%%%%
+
+
 
     return (
         <div className="container d-flex align-items-center justify-content-center min-vh-100">
             <div className="w-100" style={{ maxWidth: 400 }}>
                 {/* Desktop/tablet: surface background, no shadow, no border */}
-                <div className="card p-4 d-none d-sm-block" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: BORDER_RADIUS_MEDIUM }}>
+                <div className="card p-4 d-none border shadow d-sm-block" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: BORDER_RADIUS_MEDIUM }}>
                     <h2 className="mb-4 text-center" style={{ color: TEXT_PRIMARY, fontWeight: 'bold' }}>Register</h2>
                     <form onSubmit={handleRegister}>
+                        <div className="mb-3">
+                            <label htmlFor="name" className="form-label" style={{ color: TEXT_SECONDARY }}>Name</label>
+                            <input
+                                type="text"
+                                className="form-control rounded-3"
+                                id="name"
+                                value={name}
+                                onChange={e => setName(e.target.value)}
+                                placeholder="Enter your name"
+                                required
+                            />
+                        </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label" style={{ color: TEXT_SECONDARY }}>Email address</label>
                             <input
@@ -112,11 +128,23 @@ function Register() {
                     <h2 className="mb-4 text-center" style={{ color: TEXT_PRIMARY, fontWeight: 'bold' }}>Register</h2>
                     <form onSubmit={handleRegister}>
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label" style={{ color: TEXT_SECONDARY }}>Email address</label>
+                            <label htmlFor="name-mobile" className="form-label" style={{ color: TEXT_SECONDARY }}>Name</label>
+                            <input
+                                type="text"
+                                className="form-control rounded-3"
+                                id="name-mobile"
+                                value={name}
+                                onChange={e => setName(e.target.value)}
+                                placeholder="Enter your name"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email-mobile" className="form-label" style={{ color: TEXT_SECONDARY }}>Email address</label>
                             <input
                                 type="email"
                                 className="form-control rounded-3"
-                                id="email"
+                                id="email-mobile"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
                                 placeholder="Enter your email"
@@ -124,11 +152,11 @@ function Register() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label" style={{ color: TEXT_SECONDARY }}>Password</label>
+                            <label htmlFor="password-mobile" className="form-label" style={{ color: TEXT_SECONDARY }}>Password</label>
                             <input
                                 type="password"
                                 className="form-control rounded-3"
-                                id="password"
+                                id="password-mobile"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                                 placeholder="Enter your password"
@@ -136,11 +164,11 @@ function Register() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="confirmPassword" className="form-label" style={{ color: TEXT_SECONDARY }}>Confirm Password</label>
+                            <label htmlFor="confirmPassword-mobile" className="form-label" style={{ color: TEXT_SECONDARY }}>Confirm Password</label>
                             <input
                                 type="password"
                                 className="form-control rounded-3"
-                                id="confirmPassword"
+                                id="confirmPassword-mobile"
                                 value={confirmPassword}
                                 onChange={e => setConfirmPassword(e.target.value)}
                                 placeholder="Confirm your password"
@@ -158,4 +186,3 @@ function Register() {
 }
 
 export default Register;
-// %%%%%% END - REGISTER PAGE COMPONENT %%%%%%%%%%%% 

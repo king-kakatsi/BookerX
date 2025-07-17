@@ -44,15 +44,15 @@ namespace BookerXBackend.Controllers
         /// <summary>
         /// Registers a new user (role: User by default).
         /// </summary>
-        /// <param name="dto">Registration data (username, password)</param>
+        /// <param name="dto">Registration data (name, email, password)</param>
         /// <returns>Success or error message.</returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
-            // Check if username is taken
-            if (await _context.Users.AnyAsync(u => u.Username == dto.Username))
+            // Check if email is taken
+            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
             {
-                return BadRequest(new { message = "Username already exists." });
+                return BadRequest(new { message = "Email already exists." });
             }
 
             // Hash password
@@ -61,7 +61,8 @@ namespace BookerXBackend.Controllers
             // Create user
             var user = new User
             {
-                Username = dto.Username,
+                Name = dto.Name,
+                Email = dto.Email,
                 PasswordHash = passwordHash,
                 Role = UserRole.User // Default role
             };
@@ -80,20 +81,20 @@ namespace BookerXBackend.Controllers
         /// <summary>
         /// Authenticates a user and returns a JWT token.
         /// </summary>
-        /// <param name="dto">Login data (username, password)</param>
+        /// <param name="dto">Login data (email, password)</param>
         /// <returns>JWT token or error message.</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
             if (user == null || !PasswordHasher.Verify(dto.Password, user.PasswordHash))
             {
-                return Unauthorized(new { message = "Invalid username or password." });
+                return Unauthorized(new { message = "Invalid email or password." });
             }
 
             // Generate JWT
             var token = GenerateJwtToken(user);
-            return Ok(new { token });
+            return Ok(new { token, name = user.Name, email = user.Email });
         }
         // %%%%%%%%%%%%%%%% END - LOGIN %%%%%%%%%%%%%%%%
 
@@ -111,7 +112,8 @@ namespace BookerXBackend.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 

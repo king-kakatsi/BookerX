@@ -20,7 +20,8 @@ export const TEXT_WHITE = '#fff';
 
 // Button colors
 export const BUTTON_PRIMARY_BG = PRIMARY_COLOR;
-export const BUTTON_SECONDARY_BG = SECONDARY_COLOR;
+export const BUTTON_SECONDARY_BG = "#663866";
+// export const BUTTON_SECONDARY_BG = SECONDARY_COLOR;
 export const BUTTON_TEXT = TEXT_WHITE;
 
 // Navbar colors
