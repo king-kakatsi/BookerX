@@ -3,13 +3,7 @@ import bookerxLogo from '../assets/bookerx_logo.png';
 import menuIcon from '../assets/menu.png';
 import refreshIcon from '../assets/refresh.png';
 import { NavLink } from 'react-router-dom';
-import { 
-    NAVBAR_BG, 
-    NAVBAR_BRAND, 
-    NAVBAR_LINK_ACTIVE, 
-    NAVBAR_LINK_INACTIVE, 
-    PRIMARY_COLOR
-} from '../theme/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR, BACKGROUND_COLOR } from '../theme/colors';
 
 /**
  * Navbar component using Bootstrap's responsive collapse.
@@ -19,10 +13,10 @@ import {
  * Example usage: <Navbar showSearch={true} onSearch={handleSearch} />
  */
 function Navbar({ showSearch, onSearch, onRefresh }) {
-    const navBg = { backgroundColor: NAVBAR_BG };
-    const brandStyle = { color: NAVBAR_BRAND, fontWeight: 'bold' };
-    const activeLink = { color: NAVBAR_LINK_ACTIVE, fontWeight: 'bold', fontSize: '1.25rem' };
-    const inactiveLink = { color: NAVBAR_LINK_INACTIVE };
+    const navBg = { backgroundColor: BACKGROUND_COLOR };
+    const brandStyle = { color: PRIMARY_COLOR, fontWeight: 'bold' };
+    const activeLink = { color: PRIMARY_COLOR, fontWeight: 'bold', fontSize: '1.25rem' };
+    const inactiveLink = { color: SECONDARY_COLOR };
 
     // %%%%%% SEARCH INPUT STATE %%%%%%%%%%%%
     /**
@@ -49,6 +43,8 @@ function Navbar({ showSearch, onSearch, onRefresh }) {
     };
     // %%%%%% END - HANDLE SEARCH INPUT CHANGE %%%%%%%%%%%%
 
+
+    
     // %%%%%% CHECK IF USER IS LOGGED IN %%%%%%%%%%%%
     /**
      * Check if user is logged in.

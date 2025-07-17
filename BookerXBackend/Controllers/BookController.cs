@@ -13,7 +13,6 @@ namespace BookerXBackend.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class BookController : ControllerBase
     {
         // %%%%%%%%%%%%%%%%% PROPERTIES %%%%%%%%%%%%%%%%%%%
@@ -80,6 +79,7 @@ namespace BookerXBackend.Controllers
         /// <param name="bookDto">BookDto object to add</param>
         /// <returns>The created book with its new ID.</returns>
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Book>> CreateBook([FromBody] BookDto bookDto)
         {
             var book = new Book
@@ -109,6 +109,7 @@ namespace BookerXBackend.Controllers
         /// <param name="bookDto">Updated BookDto object</param>
         /// <returns>Success message if updated, NotFound or Forbid if not allowed.</returns>
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] BookDto bookDto)
         {
             var existingBook = await _context.Books.FindAsync(id);
@@ -149,6 +150,7 @@ namespace BookerXBackend.Controllers
         /// <param name="id">Book ID</param>
         /// <returns>Success message if deleted, NotFound or Forbid if not allowed.</returns>
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteBook(int id)
         {
             var book = await _context.Books.FindAsync(id);
@@ -181,6 +183,7 @@ namespace BookerXBackend.Controllers
         /// </summary>
         /// <returns>List of books owned by the user.</returns>
         [HttpGet("mine")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Book>>> GetMyBooks()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

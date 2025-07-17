@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../controllers/user_controller';
-import { 
-    BACKGROUND_COLOR, 
-    TEXT_PRIMARY, 
-    TEXT_SECONDARY, 
-    BUTTON_SECONDARY_BG, 
-    BUTTON_TEXT, 
-    BORDER_RADIUS_MEDIUM, 
-    BORDER_RADIUS_LARGE,
-    BORDER_RADIUS_SMALL 
-} from '../theme/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR, BACKGROUND_COLOR, WHITE, SECONDARY_SURFACE } from '../theme/colors';
 
-// %%%%%% LOGIN PAGE COMPONENT %%%%%%%%%%%%
+
+
+
 /**
  * Login page component. Handles user authentication form.
  * Displays a responsive Bootstrap form for email and password.
@@ -24,6 +17,8 @@ function Login({ onLoginSuccess }) {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+
+    
     // %%%%%% HANDLE SUBMIT %%%%%%%%%%%%
     /**
      * Handles the login form submission using the user controller.
@@ -56,15 +51,18 @@ function Login({ onLoginSuccess }) {
     }
     // %%%%%% END - HANDLE SUBMIT %%%%%%%%%%%%
 
+
+
+
     return (
         <div className="container d-flex align-items-center justify-content-center min-vh-100">
             <div className="w-100" style={{ maxWidth: 400 }}>
                 {/* Desktop/tablet: surface background, no shadow, no border */}
-                <div className="card p-4 d-none border shadow d-sm-block" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: BORDER_RADIUS_MEDIUM }}>
-                    <h2 className="mb-4 text-center" style={{ color: TEXT_PRIMARY, fontWeight: 'bold' }}>Login</h2>
+                <div className="card p-4 d-none border shadow d-sm-block" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: 10 }}>
+                    <h2 className="mb-4 text-center" style={{ color: PRIMARY_COLOR, fontWeight: 'bold' }}>Login</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3" >
-                            <label htmlFor="email" className="form-label" style={{ color: TEXT_SECONDARY }}>Email address</label>
+                            <label htmlFor="email" className="form-label" style={{ color: SECONDARY_COLOR }}>Email address</label>
                             <input
                                 type="email"
                                 className="form-control rounded-3"
@@ -76,7 +74,7 @@ function Login({ onLoginSuccess }) {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label" style={{ color: TEXT_SECONDARY }}>Password</label>
+                            <label htmlFor="password" className="form-label" style={{ color: SECONDARY_COLOR }}>Password</label>
                             <input
                                 type="password"
                                 className="form-control rounded-3"
@@ -88,15 +86,15 @@ function Login({ onLoginSuccess }) {
                             />
                         </div>
                         {error && <div className="alert alert-danger py-2 text-center" style={{ fontWeight: 'bold', fontSize: '1rem' }}>{error}</div>}
-                        <button type="submit" className="w-100 mt-2 shadow-0 border-0" style={{ backgroundColor: BUTTON_SECONDARY_BG, color: BUTTON_TEXT, borderColor: BUTTON_SECONDARY_BG, fontWeight: 'bold', borderRadius: BORDER_RADIUS_SMALL, padding: '0.5rem 0' }}>Login</button>
+                        <button type="submit" className="w-100 mt-2 shadow-0 border-0" style={{ backgroundColor: SECONDARY_SURFACE, color: WHITE, border: 'none', fontWeight: 'bold', borderRadius: 24, padding: '0.5rem 0' }}>Login</button>
                     </form>
                 </div>
                 {/* Mobile: surface background, no shadow, no border, more rounded */}
-                <div className="card p-4 d-block d-sm-none border-0" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: BORDER_RADIUS_LARGE }}>
-                    <h2 className="mb-4 text-center" style={{ color: TEXT_PRIMARY, fontWeight: 'bold' }}>Login</h2>
+                <div className="card p-4 d-block d-sm-none border-0" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: 20 }}>
+                    <h2 className="mb-4 text-center" style={{ color: PRIMARY_COLOR, fontWeight: 'bold' }}>Login</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="email-mobile" className="form-label" style={{ color: TEXT_SECONDARY }}>Email address</label>
+                            <label htmlFor="email-mobile" className="form-label" style={{ color: SECONDARY_COLOR }}>Email address</label>
                             <input
                                 type="email"
                                 className="form-control rounded-3"
@@ -108,7 +106,7 @@ function Login({ onLoginSuccess }) {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password-mobile" className="form-label" style={{ color: TEXT_SECONDARY }}>Password</label>
+                            <label htmlFor="password-mobile" className="form-label" style={{ color: SECONDARY_COLOR }}>Password</label>
                             <input
                                 type="password"
                                 className="form-control rounded-3"
@@ -120,7 +118,7 @@ function Login({ onLoginSuccess }) {
                             />
                         </div>
                         {error && <div className="alert alert-danger py-2 text-center" style={{ fontWeight: 'bold', fontSize: '1rem' }}>{error}</div>}
-                        <button type="submit" className="w-100 mt-2 shadow-0 border-0" style={{ backgroundColor: BUTTON_SECONDARY_BG, color: BUTTON_TEXT, borderColor: BUTTON_SECONDARY_BG, fontWeight: 'bold', borderRadius: BORDER_RADIUS_SMALL, padding: '0.5rem 0' }}>Login</button>
+                        <button type="submit" className="w-100 mt-2 shadow-0 border-0" style={{ backgroundColor: SECONDARY_SURFACE, color: WHITE, border: 'none', fontWeight: 'bold', borderRadius: 24, padding: '0.5rem 0' }}>Login</button>
                     </form>
                 </div>
             </div>
@@ -129,4 +127,3 @@ function Login({ onLoginSuccess }) {
 }
 
 export default Login;
-// %%%%%% END - LOGIN PAGE COMPONENT %%%%%%%%%%%% 

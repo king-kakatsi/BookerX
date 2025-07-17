@@ -46,3 +46,17 @@ export async function registerUser(name, email, password) {
     return response.data;
 }
 // %%%%%% END - REGISTER USER %%%%%%%%%%%% 
+
+
+
+// %%%%%% LOGOUT USER %%%%%%%%%%%%
+/**
+ * Logs out the user by clearing all auth-related data from localStorage.
+ * Example usage: logoutUser();
+ */
+export function logoutUser() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    // Add other keys if needed
+}
+// %%%%%% END - LOGOUT USER %%%%%%%%%%%% 

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createBook, updateBook } from '../controllers/book_controller';
-import { BACKGROUND_COLOR, TEXT_PRIMARY, TEXT_SECONDARY, BUTTON_SECONDARY_BG, BUTTON_TEXT, BORDER_RADIUS_MEDIUM, BORDER_RADIUS_LARGE, BORDER_RADIUS_SMALL } from '../theme/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR, BACKGROUND_COLOR, WHITE, SECONDARY_SURFACE } from '../theme/colors';
 import { BookFormAction } from '../utils/enums';
 
-// %%%%%% BOOK FORM PAGE COMPONENT %%%%%%%%%%%%
+
+
+
 /**
  * BookForm page component. Handles both adding and editing a book.
  * Props:
@@ -37,6 +39,9 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
         }
     }, [mode, book]);
 
+
+
+    
     // %%%%%% HANDLE SUBMIT %%%%%%%%%%%%
     /**
      * Handles form submission for add or edit.
@@ -69,16 +74,33 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             }
         }
     }
+    // Restore handler
+    function handleRestore(e) {
+        e.preventDefault();
+        if (mode === BookFormAction.EDIT && book) {
+            setName(book.name || '');
+            setCategory(book.category || '');
+            setPrice(book.price !== undefined ? book.price : '');
+            setDescription(book.description || '');
+        } else {
+            setName('');
+            setCategory('');
+            setPrice('');
+            setDescription('');
+        }
+    }
     // %%%%%% END - HANDLE SUBMIT %%%%%%%%%%%%
+
+
 
     return (
         <div className="container d-flex align-items-center justify-content-center min-vh-100 py-5">
             <div className="w-100 mt-5" style={{ maxWidth: 440 }}>
-                <div className="card p-4 border shadow" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: BORDER_RADIUS_MEDIUM }}>
-                    <h2 className="mb-4 text-center" style={{ color: TEXT_PRIMARY, fontWeight: 'bold' }}>{mode === BookFormAction.EDIT ? 'Edit Book' : 'Add Book'}</h2>
+                <div className="card p-4 border shadow" style={{ backgroundColor: BACKGROUND_COLOR, borderRadius: 10 }}>
+                    <h2 className="mb-4 text-center" style={{ color: PRIMARY_COLOR, fontWeight: 'bold' }}>{mode === BookFormAction.EDIT ? 'Edit Book' : 'Add Book'}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="name" className="form-label" style={{ color: TEXT_SECONDARY }}>Name</label>
+                            <label htmlFor="name" className="form-label" style={{ color: SECONDARY_COLOR }}>Name</label>
                             <input
                                 type="text"
                                 className="form-control rounded-3"
@@ -90,7 +112,7 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="category" className="form-label" style={{ color: TEXT_SECONDARY }}>Category</label>
+                            <label htmlFor="category" className="form-label" style={{ color: SECONDARY_COLOR }}>Category</label>
                             <input
                                 type="text"
                                 className="form-control rounded-3"
@@ -102,7 +124,7 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="price" className="form-label" style={{ color: TEXT_SECONDARY }}>Price</label>
+                            <label htmlFor="price" className="form-label" style={{ color: SECONDARY_COLOR }}>Price</label>
                             <input
                                 type="number"
                                 className="form-control rounded-3"
@@ -116,7 +138,7 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="description" className="form-label" style={{ color: TEXT_SECONDARY }}>Description</label>
+                            <label htmlFor="description" className="form-label" style={{ color: SECONDARY_COLOR }}>Description</label>
                             <textarea
                                 className="form-control rounded-3"
                                 id="description"
@@ -128,7 +150,23 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
                         </div>
                         {error && <div className="alert alert-danger py-2 text-center">{error}</div>}
                         {success && <div className="alert alert-success py-2 text-center">{success}</div>}
-                        <button type="submit" className="w-100 mt-2 shadow-0 border-0" style={{ backgroundColor: BUTTON_SECONDARY_BG, color: BUTTON_TEXT, borderColor: BUTTON_SECONDARY_BG, fontWeight: 'bold', borderRadius: BORDER_RADIUS_SMALL, padding: '0.5rem 0' }}>{mode === BookFormAction.EDIT ? 'Update Book' : 'Add Book'}</button>
+                        <div className="d-flex gap-2 mt-2">
+                            <button
+                                type="button"
+                                className="flex-fill shadow-0 border-0"
+                                style={{ backgroundColor: '#eee', color: SECONDARY_COLOR, fontWeight: 'bold', borderRadius: 24, padding: '0.5rem 0' }}
+                                onClick={handleRestore}
+                            >
+                                Restore
+                            </button>
+                            <button
+                                type="submit"
+                                className="flex-fill shadow-0 border-0"
+                                style={{ backgroundColor: SECONDARY_SURFACE, color: WHITE, fontWeight: 'bold', borderRadius: 24, padding: '0.5rem 0' }}
+                            >
+                                {mode === BookFormAction.EDIT ? 'Update Book' : 'Add Book'}
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -137,4 +175,3 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
 }
 
 export default BookForm;
-// %%%%%% END - BOOK FORM PAGE COMPONENT %%%%%%%%%%%% 

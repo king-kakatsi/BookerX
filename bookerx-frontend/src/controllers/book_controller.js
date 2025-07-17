@@ -4,6 +4,7 @@
 */
 
 import api from '../api/axios';
+import { logoutUser } from './user_controller';
 
 
 
@@ -15,10 +16,15 @@ import api from '../api/axios';
  * Example usage: const books = await fetchAllBooks(token);
  */
 export async function fetchAllBooks(token) {
-    const response = await api.get('/api/Book', {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
+    try {
+        const response = await api.get('/api/Book'); // No auth header
+        return response.data;
+    } catch (err) {
+        if (err.response && err.response.status === 401) {
+            logoutUser();
+        }
+        throw err;
+    }
 }
 // %%%%%% END - FETCH ALL BOOKS %%%%%%%%%%%%
 
@@ -33,10 +39,17 @@ export async function fetchAllBooks(token) {
  * Example usage: const books = await fetchMyBooks(token);
  */
 export async function fetchMyBooks(token) {
-    const response = await api.get('/api/Book/mine', {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
+    try {
+        const response = await api.get('/api/Book/mine', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (err) {
+        if (err.response && err.response.status === 401) {
+            logoutUser();
+        }
+        throw err;
+    }
 }
 // %%%%%% END - FETCH MY BOOKS %%%%%%%%%%%%
 
@@ -51,10 +64,17 @@ export async function fetchMyBooks(token) {
  * Example usage: const newBook = await createBook(book, token);
  */
 export async function createBook(book, token) {
-    const response = await api.post('/api/Book', book, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
+    try {
+        const response = await api.post('/api/Book', book, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (err) {
+        if (err.response && err.response.status === 401) {
+            logoutUser();
+        }
+        throw err;
+    }
 }
 // %%%%%% END - CREATE BOOK %%%%%%%%%%%%
 
@@ -69,10 +89,17 @@ export async function createBook(book, token) {
  * Example usage: const updated = await updateBook(id, book, token);
  */
 export async function updateBook(id, book, token) {
-    const response = await api.put(`/api/Book/${id}`, book, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
+    try {
+        const response = await api.put(`/api/Book/${id}`, book, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (err) {
+        if (err.response && err.response.status === 401) {
+            logoutUser();
+        }
+        throw err;
+    }
 }
 // %%%%%% END - UPDATE BOOK %%%%%%%%%%%%
 
@@ -87,10 +114,17 @@ export async function updateBook(id, book, token) {
  * Example usage: await deleteBook(id, token);
  */
 export async function deleteBook(id, token) {
-    const response = await api.delete(`/api/Book/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
+    try {
+        const response = await api.delete(`/api/Book/${id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (err) {
+        if (err.response && err.response.status === 401) {
+            logoutUser();
+        }
+        throw err;
+    }
 }
 // %%%%%% END - DELETE BOOK %%%%%%%%%%%%
 

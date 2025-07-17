@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 
-// %%%%%% LOGOUT PAGE COMPONENT %%%%%%%%%%%%
+
+
+
 /**
  * Logout page component. Clears token and redirects to login.
  * Example usage: <Logout />
@@ -16,4 +18,3 @@ function Logout() {
 }
 
 export default Logout;
-// %%%%%% END - LOGOUT PAGE COMPONENT %%%%%%%%%%%% 
