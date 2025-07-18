@@ -70,7 +70,7 @@ namespace BookerXBackend.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "User registered successfully." });
+            return Ok(new { message = "User registered successfully.", id = user.Id, name = user.Name, email = user.Email });
         }
         // %%%%%%%%%%%%%%%% END - REGISTER %%%%%%%%%%%%%%%%
 
@@ -94,7 +94,7 @@ namespace BookerXBackend.Controllers
 
             // Generate JWT
             var token = GenerateJwtToken(user);
-            return Ok(new { token, name = user.Name, email = user.Email });
+            return Ok(new { token, id = user.Id, name = user.Name, email = user.Email });
         }
         // %%%%%%%%%%%%%%%% END - LOGIN %%%%%%%%%%%%%%%%
 

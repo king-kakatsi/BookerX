@@ -22,6 +22,8 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
     const [description, setDescription] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+    const [bookUrl, setBookUrl] = useState('');
     const navigate = useNavigate();
 
     // Pre-fill fields if editing
@@ -31,11 +33,15 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             setCategory(book.category || '');
             setPrice(book.price !== undefined ? book.price : '');
             setDescription(book.description || '');
+            setImageUrl(book.imageUrl || '');
+            setBookUrl(book.bookUrl || '');
         } else {
             setName('');
             setCategory('');
             setPrice('');
             setDescription('');
+            setImageUrl('');
+            setBookUrl('');
         }
     }, [mode, book]);
 
@@ -57,12 +63,13 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             return;
         }
         const token = localStorage.getItem('token');
+        const bookData = { name, category, price, description, imageUrl, bookUrl };
         try {
             if (mode === BookFormAction.EDIT && book) {
-                await updateBook(book.id, { name, category, price, description }, token);
+                await updateBook(book.id, bookData, token);
                 setSuccess('Book updated successfully!');
             } else {
-                await createBook({ name, category, price, description }, token);
+                await createBook(bookData, token);
                 setSuccess('Book added successfully!');
             }
             setTimeout(() => navigate('/'), 1200);
@@ -82,11 +89,15 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             setCategory(book.category || '');
             setPrice(book.price !== undefined ? book.price : '');
             setDescription(book.description || '');
+            setImageUrl(book.imageUrl || '');
+            setBookUrl(book.bookUrl || '');
         } else {
             setName('');
             setCategory('');
             setPrice('');
             setDescription('');
+            setImageUrl('');
+            setBookUrl('');
         }
     }
     // %%%%%% END - HANDLE SUBMIT %%%%%%%%%%%%
@@ -146,6 +157,28 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
                                 onChange={e => setDescription(e.target.value)}
                                 placeholder="Book description"
                                 rows={3}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="imageUrl" className="form-label" style={{ color: SECONDARY_COLOR }}>Image URL</label>
+                            <input
+                                type="text"
+                                className="form-control rounded-3"
+                                id="imageUrl"
+                                value={imageUrl}
+                                onChange={e => setImageUrl(e.target.value)}
+                                placeholder="Image URL (optional)"
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="bookUrl" className="form-label" style={{ color: SECONDARY_COLOR }}>Book URL</label>
+                            <input
+                                type="text"
+                                className="form-control rounded-3"
+                                id="bookUrl"
+                                value={bookUrl}
+                                onChange={e => setBookUrl(e.target.value)}
+                                placeholder="Book URL (optional)"
                             />
                         </div>
                         {error && <div className="alert alert-danger py-2 text-center">{error}</div>}

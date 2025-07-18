@@ -17,8 +17,6 @@ const BookList = ({ books, currentUser, onEdit, onDelete, onBuy }) => {
       display: 'flex',
       flexWrap: 'wrap',
       gap: '1.5rem',
-      maxHeight: '70vh',
-      overflowY: 'auto',
       justifyContent: 'center',
       padding: '1rem 0',
     }}>

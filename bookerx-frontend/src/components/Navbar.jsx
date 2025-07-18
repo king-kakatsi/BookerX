@@ -103,6 +103,15 @@ function Navbar({ showSearch, onSearch, onRefresh }) {
                                 My Books
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink
+                                to="/my-history"
+                                style={({ isActive }) => isActive ? activeLink : inactiveLink}
+                                className="nav-link"
+                            >
+                                My History
+                            </NavLink>
+                        </li>
                                 <li className="nav-item">
                                     <NavLink
                                         to="/book/add"

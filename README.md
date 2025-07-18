@@ -19,6 +19,7 @@ BookerX/
 │   └── ...
 ├── bookerx-frontend/      # React + Vite frontend
 │   ├── src/
+│   │   ├── context/BookContext.jsx   # Centralized state for all book lists (dashboard, my books, my history)
 │   ├── public/
 │   ├── package.json
 │   └── ...
@@ -129,17 +130,32 @@ curl -X POST http://localhost:5000/api/auth/login \
 
 ---
 
-## 🌱 Features Projection (What could be added next?)
-- User roles (admin/user) and permissions
-- Book cover image upload
-- Book categories/tags
-- Pagination & search for books
-- User profile management
-- Password reset via email
-- Responsive/mobile-friendly frontend
-- Docker support for easy deployment
-- Unit & integration tests (backend & frontend)
-- Multi-language support
+## ✅ Fonctionnalités réalisées
+- Authentification JWT (register, login, logout)
+- Ajout, édition, suppression de livres (CRUD)
+- Affichage des livres (dashboard, my books)
+- Gestion des rôles utilisateur (admin/user, en cours)
+- Formulaire d’ajout/édition avec image et URL du livre
+- Affichage conditionnel des boutons Edit/Delete selon l’auteur
+- Sécurité : l’auteur d’un livre est toujours l’utilisateur connecté
+- Centralized book list management with React Context (BookContext) for dashboard, my books, and my history
+- UI responsive avec Bootstrap
+
+---
+
+## ⚠️ Limitations / TODO / Temporaire
+- **Achat de livre :** Le bouton “Buy” affiche seulement une alerte “Book successfully bought!” (aucune logique d’achat réelle pour l’instant)
+- **Edition avancée :** L’édition d’un livre ouvre un formulaire modal simple (pas de navigation dédiée, pas de validation avancée)
+- **Suppression :** Confirmation simple, pas de gestion d’erreur avancée
+- **Upload d’image :** Non implémenté (champ imageUrl seulement)
+- **Pagination et recherche avancée :** Non implémentées (recherche simple côté client)
+- **Gestion de profil utilisateur :** Non implémentée
+- **Mot de passe oublié / reset :** Non implémenté
+- **Tests unitaires frontend/backend :** Non exhaustifs ou à compléter
+- **Support mobile :** UI responsive mais non optimisée mobile à 100%
+- **Dockerisation / déploiement cloud :** Non fait
+- **Multi-langue :** Non fait
+- **Sécurité avancée :** Pas de vérification anti-CSRF, pas de throttling
 
 ---
 

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookerXBackend", "BookerXBackend\BookerXBackend.csproj", "{A40319AA-CC1A-4EC8-9FF5-39620B4D106F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookerXBackendTest", "BookerXBackendTest\BookerXBackendTest.csproj", "{7B6CE3E1-3CC1-468E-99D5-CA5ECB5DA68A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A40319AA-CC1A-4EC8-9FF5-39620B4D106F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A40319AA-CC1A-4EC8-9FF5-39620B4D106F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A40319AA-CC1A-4EC8-9FF5-39620B4D106F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B6CE3E1-3CC1-468E-99D5-CA5ECB5DA68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B6CE3E1-3CC1-468E-99D5-CA5ECB5DA68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B6CE3E1-3CC1-468E-99D5-CA5ECB5DA68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B6CE3E1-3CC1-468E-99D5-CA5ECB5DA68A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

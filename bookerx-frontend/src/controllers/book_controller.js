@@ -146,3 +146,54 @@ export function searchForBook(books, searchValue) {
     );
 }
 // %%%%%% END - SEARCH FOR BOOK %%%%%%%%%%%% 
+
+
+
+
+// %%%%%% BUY BOOK %%%%%%%%%%%%
+/**
+ * Buy a book for the current user.
+ * Parameters: bookId (number), token (string)
+ * Returns: Promise resolving to the backend response (message)
+ * Example usage: await buyBook(bookId, token);
+ */
+export async function buyBook(bookId, token) {
+    try {
+        const response = await api.post('/api/Book/buy', { bookId }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        if (response.data && response.data.message === 'Book successfully bought!') {
+            let ids = JSON.parse(localStorage.getItem('purchasedBookIds') || '[]');
+            if (!ids.includes(bookId)) {
+                ids.push(bookId);
+                localStorage.setItem('purchasedBookIds', JSON.stringify(ids));
+            }
+        }
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+// %%%%%% END - BUY BOOK %%%%%%%%%%%% 
+
+
+
+
+// %%%%%% GET PURCHASED BOOK IDS %%%%%%%%%%%%
+/**
+ * Get the list of book IDs purchased by the current user.
+ * Parameters: token (string)
+ * Returns: Promise resolving to an array of book IDs
+ * Example usage: const ids = await getPurchasedBookIds(token);
+ */
+export async function getPurchasedBookIds(token) {
+    try {
+        const response = await api.get('/api/Book/purchased', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+// %%%%%% END - GET PURCHASED BOOK IDS %%%%%%%%%%%% 

@@ -68,6 +68,10 @@ namespace BookerXBackend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.PrimitiveCollection<string>("PurchasedBookIds")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 

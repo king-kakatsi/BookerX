@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BookerXBackend.Models.Entities
 {
@@ -37,5 +39,11 @@ namespace BookerXBackend.Models.Entities
         /// </summary>
         [Required]
         public UserRole Role { get; set; } = UserRole.User;
+
+        /// <summary>
+        /// List of purchased book IDs (as JSON in DB).
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<int> PurchasedBookIds { get; set; } = new List<int>();
     }
 } 

@@ -15,4 +15,12 @@ namespace BookerXBackend.Models
         public string? ImageUrl { get; set; }
         public string? BookUrl { get; set; }
     }
+
+    /// <summary>
+    /// Request DTO for buying a book.
+    /// </summary>
+    public class BuyBookRequest
+    {
+        public int BookId { get; set; }
+    }
 } 

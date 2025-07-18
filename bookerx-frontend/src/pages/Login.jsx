@@ -36,9 +36,13 @@ function Login({ onLoginSuccess }) {
         try {
             const data = await loginUser(email, password);
             localStorage.setItem('token', data.token);
+            localStorage.setItem('username', data.name); // Ajouté pour stocker le nom
+            if (data.id) {
+                localStorage.setItem('userId', data.id);
+            }
             setError('');
-            if (onLoginSuccess && data.username) {
-                onLoginSuccess(data.username);
+            if (onLoginSuccess && data.name) {
+                onLoginSuccess(data.name);
             }
             navigate('/');
         } catch (err) {

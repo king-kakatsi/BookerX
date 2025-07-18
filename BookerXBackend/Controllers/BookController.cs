@@ -57,7 +57,7 @@ namespace BookerXBackend.Controllers
         /// </summary>
         /// <param name="id">Book ID</param>
         /// <returns>The requested book, or NotFound if it doesn't exist.</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
             var book = await _context.Books.FindAsync(id);
@@ -82,13 +82,18 @@ namespace BookerXBackend.Controllers
         [Authorize]
         public async Task<ActionResult<Book>> CreateBook([FromBody] BookDto bookDto)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
             var book = new Book
             {
                 Name = bookDto.Name,
                 Category = bookDto.Category,
                 Price = bookDto.Price,
                 Description = bookDto.Description,
-                AuthorId = bookDto.AuthorId,
+                AuthorId = int.Parse(userIdClaim), // Sécurisé : toujours l'utilisateur connecté
                 ImageUrl = bookDto.ImageUrl,
                 BookUrl = bookDto.BookUrl
             };
@@ -196,5 +201,55 @@ namespace BookerXBackend.Controllers
             return Ok(books);
         }
         // %%%%%%%%%%%%%%%% END - GET MY BOOKS %%%%%%%%%%%%%%%%
+
+
+
+
+        // %%%%%%%%%%%%%%%% BUY BOOK %%%%%%%%%%%%%%%%
+        /// <summary>
+        /// Allows the current user to buy a book (adds bookId to PurchasedBookIds).
+        /// </summary>
+        /// <param name="bookId">ID of the book to buy</param>
+        /// <returns>Success or already bought message</returns>
+        [HttpPost("buy")]
+        [Authorize]
+        public async Task<IActionResult> BuyBook([FromBody] BuyBookRequest request)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null)
+                return Unauthorized();
+            int userId = int.Parse(userIdClaim);
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                return Unauthorized();
+            if (user.PurchasedBookIds.Contains(request.BookId))
+                return Ok(new { message = "Already bought" });
+            user.PurchasedBookIds.Add(request.BookId);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Book successfully bought!" });
+        }
+        // %%%%%%%%%%%%%%%% END - BUY BOOK %%%%%%%%%%%%%%%%
+
+
+
+
+        // %%%%%%%%%%%%%%%% GET PURCHASED BOOK IDS %%%%%%%%%%%%%%%%
+        /// <summary>
+        /// Returns the list of book IDs purchased by the current user.
+        /// </summary>
+        [HttpGet("purchased")]
+        [Authorize]
+        public async Task<IActionResult> GetPurchasedBookIds()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null)
+                return Unauthorized();
+            int userId = int.Parse(userIdClaim);
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                return Unauthorized();
+            return Ok(user.PurchasedBookIds);
+        }
+        // %%%%%%%%%%%%%%%% END - GET PURCHASED BOOK IDS %%%%%%%%%%%%%%%%
     }
 } 
