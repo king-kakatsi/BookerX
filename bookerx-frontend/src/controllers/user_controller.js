@@ -57,6 +57,7 @@ export async function registerUser(name, email, password) {
 export function logoutUser() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    // TODO: Clear global lists
     // Add other keys if needed
 }
 // %%%%%% END - LOGOUT USER %%%%%%%%%%%% 

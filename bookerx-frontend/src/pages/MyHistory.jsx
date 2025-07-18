@@ -8,9 +8,11 @@ import { updateBook, deleteBook } from '../controllers/book_controller';
  * Props: books, loading, currentUser, searchBooks, searchValue, refreshAll
  */
 function MyHistory({ books, loading, currentUser, searchBooks }) {
+
     const [editingBook, setEditingBook] = useState(null);
     const [editFields, setEditFields] = useState({ name: '', category: '', price: '', description: '', imageUrl: '', bookUrl: '' });
     const [localBooks, setLocalBooks] = useState([]);
+
     // Use the list passed as prop, or the local one if modified
     const displayBooks = localBooks.length > 0 ? localBooks : books;
     const filteredBooks = searchBooks(displayBooks);
@@ -26,6 +28,8 @@ function MyHistory({ books, loading, currentUser, searchBooks }) {
             bookUrl: book.bookUrl || ''
         });
     };
+
+
     const handleDelete = async (book) => {
         if (!window.confirm(`Delete book "${book.name}"?`)) return;
         try {
@@ -36,9 +40,13 @@ function MyHistory({ books, loading, currentUser, searchBooks }) {
             alert('Delete failed.');
         }
     };
+
+
     const handleEditChange = (e) => {
         setEditFields({ ...editFields, [e.target.name]: e.target.value });
     };
+
+
     const handleEditSave = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -49,8 +57,11 @@ function MyHistory({ books, loading, currentUser, searchBooks }) {
             alert('Update failed.');
         }
     };
+
+
     const handleEditCancel = () => setEditingBook(null);
 
+    
     return (
         <div className="container py-5 mt-5 ">
             <h1 style={{ color: PRIMARY_COLOR, fontWeight: 'bold', textAlign: 'center' }}>Books you have purchased.</h1>

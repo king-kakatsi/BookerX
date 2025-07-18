@@ -13,11 +13,14 @@ import { PRIMARY_COLOR, SECONDARY_COLOR, BACKGROUND_COLOR } from '../theme/color
  * Example usage: <Navbar showSearch={true} onSearch={handleSearch} />
  */
 function Navbar({ showSearch, onSearch, onRefresh }) {
+
     const navBg = { backgroundColor: BACKGROUND_COLOR };
     const brandStyle = { color: PRIMARY_COLOR, fontWeight: 'bold' };
     const activeLink = { color: PRIMARY_COLOR, fontWeight: 'bold', fontSize: '1.25rem' };
     const inactiveLink = { color: SECONDARY_COLOR };
 
+
+    
     // %%%%%% SEARCH INPUT STATE %%%%%%%%%%%%
     /**
      * State for the search input value in the navbar.

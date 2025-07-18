@@ -15,6 +15,7 @@ import { BookFormAction } from '../utils/enums';
  * Example usage: <BookForm mode={BookFormAction.ADD} /> or <BookForm mode={BookFormAction.EDIT} book={book} />
  */
 function BookForm({ mode = BookFormAction.ADD, book = null }) {
+
     // Form state
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
@@ -26,7 +27,9 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
     const [bookUrl, setBookUrl] = useState('');
     const navigate = useNavigate();
 
-    // Pre-fill fields if editing
+
+
+    // %%%%%%%%%%% PRE FILL FIELDS FOR EDITING %%%%%%%%%%%%%%
     useEffect(() => {
         if (mode === BookFormAction.EDIT && book) {
             setName(book.name || '');
@@ -44,6 +47,7 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             setBookUrl('');
         }
     }, [mode, book]);
+    // %%%%%%%%%%% END - PRE FILL FIELDS FOR EDITING %%%%%%%%%%%%%%
 
 
 
@@ -55,15 +59,19 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
      * Shows error/success and redirects after success.
      */
     async function handleSubmit(event) {
+
         event.preventDefault();
         setError('');
         setSuccess('');
+
         if (!name || !category || !price) {
             setError('Please fill in all required fields.');
             return;
         }
+
         const token = localStorage.getItem('token');
         const bookData = { name, category, price, description, imageUrl, bookUrl };
+
         try {
             if (mode === BookFormAction.EDIT && book) {
                 await updateBook(book.id, bookData, token);
@@ -73,6 +81,7 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
                 setSuccess('Book added successfully!');
             }
             setTimeout(() => navigate('/'), 1200);
+
         } catch (err) {
             if (err.response && err.response.status === 401) {
                 setError('You must be logged in to add or edit a book. Please log in and try again.');
@@ -81,7 +90,12 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             }
         }
     }
-    // Restore handler
+    // %%%%%% END - HANDLE SUBMIT %%%%%%%%%%%%
+    
+
+
+
+    // %%%%%%%%%%%%%%%%%%%% RESTORE FORM %%%%%%%%%%%%%%%%%%%%%
     function handleRestore(e) {
         e.preventDefault();
         if (mode === BookFormAction.EDIT && book) {
@@ -100,7 +114,7 @@ function BookForm({ mode = BookFormAction.ADD, book = null }) {
             setBookUrl('');
         }
     }
-    // %%%%%% END - HANDLE SUBMIT %%%%%%%%%%%%
+    // %%%%%%%%%%%%%%%%%%%% END - RESTORE FORM %%%%%%%%%%%%%%%%%%%%%
 
 
 

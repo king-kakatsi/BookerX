@@ -9,9 +9,14 @@ import BookCard from './BookCard';
  *   - onEdit, onDelete, onBuy: callback functions
  */
 const BookList = ({ books, currentUser, onEdit, onDelete, onBuy }) => {
+
+
   if (!books || books.length === 0) {
     return <div style={{ textAlign: 'center', color: '#888', marginTop: 40, fontSize: 20 }}>No book found</div>;
   }
+
+
+  
   return (
     <div style={{
       display: 'flex',

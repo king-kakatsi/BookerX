@@ -14,20 +14,28 @@ import MyHistory from './pages/MyHistory';
 import { BookProvider, useBookContext } from './context/BookContext';
 
 function AppRoutes() {
+    
+    // Use the custom BookContext to access global state
     const location = useLocation();
     const { searchValue, setSearchValue, refreshAll, generalBooks, myBooks, myHistory, currentUser, loading, searchBooks } = useBookContext();
+
     // Show search only on dashboard ("/" or "/dashboard") and my-books and my-history
     const showSearch = ["/", "/dashboard", "/my-books", "/my-history"].includes(location.pathname);
+
     // Global username state
     const [username, setUsername] = useState(() => {
         return localStorage.getItem('username') || '';
     });
+
+    
     // Function to update username after login
     const handleLoginSuccess = (username) => {
         setUsername(username);
         localStorage.setItem('username', username);
     };
-    // Vérifier si l'utilisateur est authentifié
+
+
+    // Verify if user is authenticated
     const isAuthenticated = !!localStorage.getItem('token');
     return (
         <>

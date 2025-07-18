@@ -10,11 +10,14 @@ import { buyBook } from '../controllers/book_controller';
  *   - onEdit, onDelete, onBuy: callback functions
  */
 const BookCard = ({ book, currentUser, onEdit, onDelete, onBuy }) => {
+
   const isAuthor = currentUser && book.authorId === currentUser.id;
   const isAdmin = currentUser && currentUser.role === 'Admin';
   const purchasedIds = JSON.parse(localStorage.getItem('purchasedBookIds') || '[]');
   const isBought = purchasedIds.includes(book.id);
 
+
+  
   return (
     <div
       style={{

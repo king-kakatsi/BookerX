@@ -7,12 +7,17 @@ export function useBookContext() {
     return useContext(BookContext);
 }
 
+
 export function BookProvider({ children }) {
+    
+    // State variables for books, purchased book IDs, loading state, search value, and refresh key
     const [generalBooks, setGeneralBooks] = useState([]);
     const [purchasedBookIds, setPurchasedBookIds] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [refreshKey, setRefreshKey] = useState(0);
+
+
 
     // Get the current user from localStorage
     const currentUser = {
@@ -20,7 +25,9 @@ export function BookProvider({ children }) {
         role: localStorage.getItem('role') || ''
     };
 
-    // Refresh all lists from the backend
+
+    // %%%%%%%%%%%%%% REFRESH ALL BOOKS %%%%%%%%%%%%%%
+    // Function to refresh all books and purchased book IDs
     const refreshAll = useCallback(async () => {
         setLoading(true);
         try {
@@ -37,20 +44,31 @@ export function BookProvider({ children }) {
             setLoading(false);
         }
     }, []);
+    // %%%%%%%%%%%%%% END - REFRESH ALL BOOKS %%%%%%%%%%%%%%
+
+
 
     // Load on first access or refresh
     useEffect(() => {
         refreshAll();
     }, [refreshKey, refreshAll]);
 
+
+
     // Method to force refresh (from navbar)
     const triggerRefresh = () => setRefreshKey(k => k + 1);
 
-    // Filtered lists
+
+
+    // %%%%%%%%%%%%%%%%%% FILTERED LISTS %%%%%%%%%%%%%%%%%
     const myBooks = generalBooks.filter(b => b.authorId === currentUser.id);
     const myHistory = generalBooks.filter(b => purchasedBookIds.includes(b.id));
+    // %%%%%%%%%%%%%%%%%% END - FILTERED LISTS %%%%%%%%%%%%%%%%%
 
-    // Local search
+
+
+
+    // %%%%%%%%%%%%%%%%% LOCAL SEARCH %%%%%%%%%%%%%%%%%%%%
     function searchBooks(list) {
         if (!searchValue) return list;
         return list.filter(book =>
@@ -59,6 +77,9 @@ export function BookProvider({ children }) {
             (book.description || '').toLowerCase().includes(searchValue.toLowerCase())
         );
     }
+    // %%%%%%%%%%%%%%%%% END - LOCAL SEARCH %%%%%%%%%%%%%%%%%%%%
+
+
 
     return (
         <BookContext.Provider value={{
